@@ -14,7 +14,7 @@ O objetivo deste projeto é fornecer uma demonstração interativa e didática d
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 - **Linguagens:** HTML5, CSS3, JavaScript (ES6+)
 - **APIs de Criptografia:** Web Crypto API / Node.js Crypto
@@ -39,12 +39,6 @@ O objetivo deste projeto é fornecer uma demonstração interativa e didática d
 
 ---
 
-## Integrantes do Grupo
-
-| **Integrante 1** | Criptografia Simétrica e Assimétrica |
-| **Pessoa 2** | Aplicação e conceitos de Criptografia |
-| **Júlia Vitória** | Hash e Verificação de Integridade (SHA-256) |
-| **Integrante 4** | Assinatura Digital e Certificados Digitais |
 
 ---
 
