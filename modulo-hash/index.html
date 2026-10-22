@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificador de Integridade (SHA-256)</title>
+    <style>
+        /* Variáveis de cores para facilitar */
+        :root {
+            --azul: #2563eb;
+            --azul-escuro: #1d4ed8;
+            --fundo: #f8fafc;
+            --cartao: #ffffff;
+            --texto: #1e293b;
+            --borda: #e2e8f0;
+        }
+
+        /* Estilo geral da página */
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--fundo);
+            color: var(--texto);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--azul);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        /* Estilo das caixas (cartões) */
+        .cartao {
+            background-color: var(--cartao);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+        }
+
+        .cartao h2 {
+            margin-top: 0;
+            font-size: 1.3rem;
+            border-bottom: 2px solid var(--borda);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* Elementos de formulário */
+        .grupo {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        input[type="text"], input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--borda);
+            border-radius: 8px;
+            box-sizing: border-box; /* Garante que o padding não quebre a largura */
+            font-size: 1rem;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--azul);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        }
+
+        .ou-divisor {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #64748b;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        /* Botões */
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--azul);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: var(--azul-escuro);
+        }
+
+        /* Caixas de resultado */
+        .resultado-caixa {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: var(--fundo);
+            border: 1px solid var(--borda);
+            border-radius: 8px;
+            word-break: break-all; /* Quebra o texto longo do hash */
+            font-family: monospace; /* Fonte com espaçamento igual para o hash */
+            font-size: 0.95rem;
+            text-align: center;
+        }
+
+        /* Mensagens de Sucesso e Erro */
+        .sucesso {
+            background-color: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .erro {
+            background-color: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Verificador de Integridade</h1>
+
+        <!-- TELA 1: GERAR HASH -->
+        <div class="cartao">
+            <h2>1. Gerar Hash</h2>
+            
+            <div class="grupo">
+                <label>Digite uma mensagem:</label>
+                <input type="text" id="textoGerar" placeholder="Ex: Olá mundo">
+            </div>
+
+            <div class="ou-divisor">OU</div>
+
+            <div class="grupo">
+                <label>Selecione um arquivo:</label>
+                <input type="file" id="arquivoGerar">
+            </div>
+
+            <button onclick="gerarHash()">Calcular SHA-256</button>
+            
+            <div class="resultado-caixa" id="caixaResultado1" style="display: none;">
+                <strong>Hash Gerado:</strong><br><br>
+                <span id="resultadoHash"></span>
+            </div>
+        </div>
+
+        <!-- TELA 2: VERIFICAR HASH -->
+        <div class="cartao">
+            <h2>2. Verificar Integridade</h2>
+            
+            <div class="grupo">
+                <label>Digite a mensagem novamente:</label>
+                <input type="text" id="textoVerificar" placeholder="Ex: Olá mundo">
+            </div>
+
+            <div class="ou-divisor">OU</div>
+
+            <div class="grupo">
+                <label>Selecione um arquivo:</label>
+                <input type="file" id="arquivoVerificar">
+            </div>
+
+            <div class="grupo" style="margin-top: 20px;">
+                <label style="color: var(--azul);">Cole o Hash de referência para comparar:</label>
+                <input type="text" id="hashReferencia" placeholder="Cole o hash original aqui">
+            </div>
+
+            <button onclick="verificarHash()">Verificar</button>
+            
+            <div id="resultadoComparacao" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script>
+        // Função para calcular o SHA-256 nativamente
+        async function calcularSHA256(conteudo) {
+            let buffer;
+            if (typeof conteudo === 'string') {
+                buffer = new TextEncoder().encode(conteudo);
+            } else {
+                buffer = conteudo;
+            }
+
+            const hashBuffer = await crypto.subtle.digest('SHA-256', buffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+        }
+
+        // Função para pegar texto ou arquivo
+        async function obterConteudo(idTexto, idArquivo) {
+            const arquivo = document.getElementById(idArquivo).files[0];
+            const texto = document.getElementById(idTexto).value;
+
+            if (arquivo) return await arquivo.arrayBuffer();
+            if (texto) return texto;
+            
+            alert("Por favor, insira um texto ou selecione um arquivo.");
+            return null;
+        }
+
+        // Ação: Gerar Hash
+        async function gerarHash() {
+            const conteudo = await obterConteudo('textoGerar', 'arquivoGerar');
+            if (!conteudo) return;
+
+            const hash = await calcularSHA256(conteudo);
+            
+            document.getElementById('resultadoHash').innerText = hash;
+            document.getElementById('caixaResultado1').style.display = 'block';
+        }
+
+        // Ação: Verificar Hash
+        async function verificarHash() {
+            const conteudo = await obterConteudo('textoVerificar', 'arquivoVerificar');
+            if (!conteudo) return;
+
+            const hashCalculado = await calcularSHA256(conteudo);
+            const hashReferencia = document.getElementById('hashReferencia').value.trim().toLowerCase();
+
+            if (!hashReferencia) {
+                alert("Você precisa colar o hash de referência para fazer a comparação.");
+                return;
+            }
+
+            const divStatus = document.getElementById('resultadoComparacao');
+            divStatus.style.display = 'block';
+            
+            if (hashCalculado === hashReferencia) {
+                divStatus.innerHTML = "✅ <strong>INTEGRIDADE CONFIRMADA</strong><br><br>Os hashes são idênticos. O arquivo ou mensagem não sofreu alterações.";
+                divStatus.className = "sucesso";
+            } else {
+                divStatus.innerHTML = "❌ <strong>ALERTA DE INTEGRIDADE</strong><br><br>Os hashes são diferentes. O arquivo ou mensagem foi modificado ou corrompido.";
+                divStatus.className = "erro";
+            }
+        }
+    </script>
+
+</body>
+</html>
