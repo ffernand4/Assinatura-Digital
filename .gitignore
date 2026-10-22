@@ -1,0 +1,18 @@
+# Arquivos temporários Python
+__pycache__/
+*.pyc
+.venv/
+
+# Arquivos criptográficos do módulo
+modulo-assinatura-digital/chave_privada.pem
+modulo-assinatura-digital/chave_publica.pem
+modulo-assinatura-digital/certificado.pem
+modulo-assinatura-digital/*.sig
+
+# Documentos locais de teste do módulo
+modulo-assinatura-digital/documento.txt
+modulo-assinatura-digital/documento_alterado.txt
+modulo-assinatura-digital/assinatura_alterada.sig
+
+# Arquivos de assinatura
+modulo-assinatura-digital/*.sig
