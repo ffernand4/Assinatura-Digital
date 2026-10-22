@@ -16,8 +16,10 @@ O objetivo deste projeto é fornecer uma demonstração interativa e didática d
 
 ## Tecnologias Utilizadas
 
-- **Linguagens:** HTML5, CSS3, JavaScript (ES6+)
-- **APIs de Criptografia:** Web Crypto API / Node.js Crypto
+- **Linguagens:** HTML5, CSS3, JavaScript (ES6+), Python
+- **Framework de interface:** Streamlit
+- **Biblioteca de criptografia:** Cryptography
+- **Algoritmo:** AES-256-GCM
 - **Formatos:** JSON, Hexadecimal, Base64, X.509 / PEM
 
 ---
@@ -25,8 +27,8 @@ O objetivo deste projeto é fornecer uma demonstração interativa e didática d
 ## Funcionalidades e Telas
 
 ### Módulo 1: Criptografia Simétrica e Assimétrica
-- Cifragem e decifragem de mensagens e dados usando chaves simétricas.
-- Troca segura de dados e cifragem usando par de chaves assimétricas.
+- Criptografia Simétrica: criptografia e descriptografia de mensagens utilizando AES-256-GCM, com geração de chave secreta e tratamento de erros para chaves incorretas.
+- Criptografia Assimétrica: demonstração de cifragem e decifragem utilizando pares de chaves pública e privada.
 
 ### Módulo 2: Gerador e Verificador de Hash
 - **Gerar Hash:** Calcula o SHA-256 de mensagens de texto ou arquivos locais.
