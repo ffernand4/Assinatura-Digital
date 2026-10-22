@@ -40,11 +40,9 @@ O objetivo deste projeto é fornecer uma demonstração interativa e didática d
 ---
 
 
----
-
 ## Documentação e Apresentação
 
 Além do código-fonte, o projeto conta com:
 - **Relatório Técnico:** Detalhamento teórico dos algoritmos, diferenças entre hash/criptografia, efeito avalanche, KDFs (Argon2) e estrutura de certificados.
 -  **Apresentação de Slides:** Material visual estruturado para a exposição de 15 minutos.
-- 
+
